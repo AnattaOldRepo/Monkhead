@@ -12,6 +12,7 @@ class Monkhead {
 	 *	Database credentials
 	 */
 
+	private $dbhost;
 	private $dbname;
 	private $dbuser;
 	private $dbpass;
@@ -23,7 +24,8 @@ class Monkhead {
 	 *	Set DB credentials, service whose API is being called for and API endpoint details on instantiation
 	 */
 
-	public function __construct( $dbname, $dbuser, $dbpass, $service, $api_endpoint_type, $api_endpoint_call ) {
+	public function __construct( $dbhost, $dbname, $dbuser, $dbpass, $service, $api_endpoint_type, $api_endpoint_call ) {
+		$this->dbhost = $dbhost;
 		$this->dbname = $dbname;
 		$this->dbuser = $dbuser;
 		$this->dbpass = $dbpass;

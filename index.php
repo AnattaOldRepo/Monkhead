@@ -4,7 +4,7 @@
  *	This is the main file which handles all the endpoints of the API
  */
 
-// Load DB credentials: DBNAME, DBUSER, DBPASS
+// Load DB credentials: DBHOST, DBNAME, DBUSER, DBPASS
 require '../monkhead-db-credentials.php';
 
 // Define absolute path
@@ -79,7 +79,7 @@ if ( ! array_key_exists( $service, $whitelist ) || ! in_array( $api_version, $wh
 require MONKPATH . '/class-monkhead.php';
 
 // Instantiate monkhead class object
-$monkhead = new Monkhead( DBNAME, DBUSER, DBPASS, $service, $api_endpoint_type, $api_endpoint_call );
+$monkhead = new Monkhead( DBHOST, DBNAME, DBUSER, DBPASS, $service, $api_endpoint_type, $api_endpoint_call );
 
 // Load the required file based on request
 require MONKPATH . '/' . $service . '-' . $api_version . '.php';
