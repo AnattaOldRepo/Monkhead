@@ -32,4 +32,20 @@ class Monkhead {
 		$this->api_endpoint_call = $api_endpoint_call;
 	}
 
+	/**
+	 *	Function to return the API endpoint type
+	 */
+
+	public function get_api_endpoint_type() {
+		return $this->api_endpoint_type;
+	}
+
+	/**
+	 *	Function to return the API endpoint call
+	 */
+
+	public function get_api_endpoint_call() {
+		return $this->api_endpoint_call;
+	}
+
 }
