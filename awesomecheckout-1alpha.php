@@ -10,6 +10,15 @@ class awesomecheckout_api_handler {
 	public function __construct() {
 		global $monkhead;
 
+		// Verify API key
+		if ( ! $monkhead->verify_api_key() ) {
+			echo json_encode( array(
+				'status' => 'error',
+				'message' => 'Invalid Key!'
+			));
+			die();
+		}
+
 		$api_endpoint_type = $monkhead->get_api_endpoint_type();
 		$api_endpoint_call = $monkhead->get_api_endpoint_call();
 
