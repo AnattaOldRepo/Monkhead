@@ -83,3 +83,7 @@ $monkhead = new Monkhead( DBNAME, DBUSER, DBPASS, $service, $api_endpoint_type, 
 
 // Load the required file based on request
 require MONKPATH . '/' . $service . '-' . $api_version . '.php';
+
+// Fire off the class
+$service_api_handler = $service . '_api_handler';
+$serve = new $service_api_handler();
