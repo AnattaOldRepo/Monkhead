@@ -58,7 +58,7 @@ else
 	$api_endpoint_call = false;
 
 // Die if the API url is mischievous
-if ( ! $service || ! $api_version || ! $api_endpoint_type || ! $api_endpoint_call ) {
+if ( ! $service || ! $api_version || ! $api_endpoint_type || ! $api_endpoint_call || isset( $url_parameters[5] ) ) {
 	echo json_encode( array(
 		'status' => 'error',
 		'message' => 'Bad URL!'
