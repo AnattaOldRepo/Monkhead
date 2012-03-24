@@ -41,11 +41,19 @@ class Monkhead {
 	 */
 
 	public function __construct( $dbhost, $dbname, $dbuser, $dbpass, $service, $api_endpoint_type, $api_endpoint_call ) {
+		// Set Database credentials
 		$this->dbhost = $dbhost;
 		$this->dbname = $dbname;
 		$this->dbuser = $dbuser;
 		$this->dbpass = $dbpass;
+
+		// Set MySQLi connection handle
+		$this->mysqli = $this->establish_mysqli_connection();
+
+		// Set Product or Service we are using in this instance
 		$this->service = $service;
+
+		// Set API Endpoints
 		$this->api_endpoint_type = $api_endpoint_type;
 		$this->api_endpoint_call = $api_endpoint_call;
 	}
@@ -71,7 +79,7 @@ class Monkhead {
 	 */
 
 	public function establish_mysqli_connection() {
-		$mysqli = mysqli_connect( DBHOST, DBUSER, DBPASS, DBNAME );
+		$mysqli = mysqli_connect( $this->dbhost, $this->dbuser, $this->dbpass, $this->dbname );
 		if ( mysqli_connect_errno( $mysqli ) ) {
 			error_log( 'Failed to connect to MySQL: ' . mysqli_connect_error() );
 			return false;
