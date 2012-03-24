@@ -79,9 +79,9 @@ class Monkhead {
 	 */
 
 	public function establish_mysqli_connection() {
-		$mysqli = mysqli_connect( $this->dbhost, $this->dbuser, $this->dbpass, $this->dbname );
-		if ( mysqli_connect_errno( $mysqli ) ) {
-			error_log( 'Failed to connect to MySQL: ' . mysqli_connect_error() );
+		$mysqli = new mysqli( $this->dbhost, $this->dbuser, $this->dbpass, $this->dbname );
+		if ( $mysqli->connect_errno ) {
+			error_log( 'Failed to connect to MySQL: ' . $mysqli->connect_error );
 			return false;
 		}
 		return $mysqli;
