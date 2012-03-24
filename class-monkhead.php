@@ -96,7 +96,7 @@ class Monkhead {
 		$mysqli = $this->mysqli;
 		$query = "SELECT id FROM users WHERE email = '$user_email';";
 		$result = $mysqli->query( $query );
-		$row = mysqli_fetch_assoc( $result );
+		$row = $result->fetch_assoc();
 
 		if ( is_null( $row ) )
 			return false;
