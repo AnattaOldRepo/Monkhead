@@ -148,4 +148,25 @@ class Monkhead {
 			return false;
 	}
 
+	/**
+	 *	Function to verify the api key for current API call
+	 */
+
+	public function verify_api_key() {
+		// Get the API key sent
+		$api_key = $_REQUEST['api_key'];
+
+		// Fetch the service name for this API key
+		$mysqli = $this->mysqli;
+		$query = "SELECT service FROM api_keys WHERE api_key = '$api_key';";
+		$result = $mysqli->query( $query );
+		$row = $result->fetch_assoc();
+
+		// Check the service which this API key belongs to with the service for which the current API call was made for
+		if ( $this->service == $row['service'] )
+			return true;
+		else
+			return false;
+	}
+	
 }
