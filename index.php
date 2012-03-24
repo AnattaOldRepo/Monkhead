@@ -32,12 +32,41 @@ $whitelist = array(
 
 // Lets get the request url and break it into parts for analyzing
 $url_parameters = explode( '/', $_SERVER['REQUEST_URI'] );
-$service = $url_parameters[1];
-$api_version = $url_parameters[2];
-$api_endpoint_type = $url_parameters[3];
-$api_endpoint_call = $url_parameters[4];
 
-// Die if this is not a whitelisted request
+// Service
+if ( isset( $url_parameters[1] ) && strlen( $url_parameters[1] ) != 0 && ctype_alnum( $url_parameters[1] ) )
+	$service = $url_parameters[1];
+else
+	$service = false;
+
+// API Version
+if ( isset( $url_parameters[2] ) && strlen( $url_parameters[2] ) != 0 && ctype_alnum( $url_parameters[2] ) )
+	$api_version = $url_parameters[2];
+else
+	$api_version = false;
+
+// API Endpoint type
+if ( isset( $url_parameters[3] ) && strlen( $url_parameters[3] ) != 0 && ctype_alnum( $url_parameters[3] ) )
+	$api_endpoint_type = $url_parameters[3];
+else
+	$api_endpoint_type = false;
+
+// API Endpoint call
+if ( isset( $url_parameters[4] ) && strlen( $url_parameters[4] ) != 0 && ctype_alnum( $url_parameters[4] ) )
+	$api_endpoint_call = $url_parameters[4];
+else
+	$api_endpoint_call = false;
+
+// Die if the API url is mischievous
+if ( ! $service || ! $api_version || ! $api_endpoint_type || ! $api_endpoint_call ) {
+	echo json_encode( array(
+		'status' => 'error',
+		'message' => 'Bad URL!'
+	));
+	die();
+}
+
+// Die if this API call is not a whitelisted request
 if ( ! array_key_exists( $service, $whitelist ) || ! in_array( $api_version, $whitelist[$service]['version'] ) ) {
 	echo json_encode( array(
 		'status' => 'error',
