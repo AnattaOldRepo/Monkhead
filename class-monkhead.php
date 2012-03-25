@@ -197,7 +197,47 @@ class Monkhead {
 		$row = $result->fetch_assoc();
 
 		return $row;
+	}
 
+	/**
+	 *	Function to get user ID from email
+	 */
+
+	public function get_user_id_from_email( $email ) {
+		if ( ! $this->is_email( $email ) )
+			return false;
+
+		// Make a database query
+		$query = "SELECT id FROM users WHERE email = '$email';";
+		$mysqli = $this->mysqli;
+		$result = $mysqli->query( $query );
+		$row = $result->fetch_assoc();
+
+		return (int) $row['id'];
+	}
+
+	/**
+	 *	Function to update user details
+	 *
+	 *	Right now updates email address, as thats the only user detail we are saving as of now
+	 *
+	 *	@param User ID and array of details that we want to modify
+	 */
+
+	public function update_user( $user_id, $user_details ) {
+		// Fetch all the existing details and then merge it with the modifications
+		$user_existing_details = $this->get_user( $user_id );
+		$user_details = array_merge( $user_existing_details, $user_details );
+
+		// Write to database
+		$mysqli = $this->mysqli;
+		$query = "UPDATE users SET email = '{$user_details['email']}' WHERE id = $user_id;";
+		$result = $mysqli->query( $query );
+
+		if ( $result )
+			return true;
+		else
+			return false;
 	}
 
 	/**
