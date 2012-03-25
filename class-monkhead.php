@@ -143,7 +143,7 @@ class Monkhead {
 	}
 
 	/**
-	 *	Function to check if the user already exists in the username
+	 *	Function to check if the user already exists
 	 */
 
 	public function user_exists( $user_email ) {
@@ -288,4 +288,20 @@ class Monkhead {
 			return false;
 	}
 
+	/**
+	 *	Function to delete API key (marking it as inactive)
+	 */
+
+	public function delete_api_key( $api_key ) {
+		// Update its status to be "inactive"
+		$mysqli = $this->mysqli;
+		$query = "UPDATE api_keys SET status = 'inactive' WHERE api_key = '$api_key';";
+		$result = $mysqli->query( $query );
+
+		if ( $result )
+			return true;
+		else
+			return false;
+	}
+	
 }
