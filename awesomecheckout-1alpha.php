@@ -52,7 +52,7 @@ class awesomecheckout_api_handler {
 	public function serve_latest_version() {
 		echo json_encode( array(
 			'status' => 'success',
-			'latestVersion' => '1.1.2'
+			'latestVersion' => '1.0'
 		));
 		die();
 	}
