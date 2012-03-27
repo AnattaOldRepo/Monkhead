@@ -3,22 +3,11 @@
 # Set header to allow access from any domain for making calls
 Header set Access-Control-Allow-Origin *
 
-# Different set of rules of git-pull.php, necessary for github pings
-<files git-pull.php>
-        <IfModule mod_rewrite.c>
-                Options +FollowSymLinks
-                RewriteEngine on
-                RewriteCond %{REQUEST_FILENAME} !-f
-                RewriteCond %{REQUEST_FILENAME} !-d
-                RewriteRule . index.php [L]
-        </IfModule>
-</files>
-# If the access was for git-pull.php, its execution doesn't even reach this point
-
-# For any other access attempts, these rules kick in.
-# Reason why I have setup it like this is for performance reasons, rewrite to index.php for every access untill a separate rule is specified for that above. This way we have an extra check for specific file at each request and therotically it should be still faster because we are still avoiding any file existence checks.
+# Reason why I have setup it like this is for performance reasons, rewrite to index.php for every access with an exception to git-pull.php file, required for receiving github pings
+# This way we have an extra check for specific file at each request but therotically it should be still faster because we are still avoiding any file existence checks (I/O checks).
 <IfModule mod_rewrite.c>
 	Options +FollowSymLinks
 	RewriteEngine on
+	RewriteCond %{REQUEST_URI} !^/git-pull.php
 	RewriteRule . index.php [L]
 </IfModule>
