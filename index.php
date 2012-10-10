@@ -12,8 +12,8 @@ define( MONKPATH, dirname( __FILE__ ) );
 
 // Define whitelist array for the services and api versions allowed
 $whitelist = array(
-	// WPReadable
-	'wpreadable' => array(
+	// My Abandoned Cart
+	'abandonedcart' => array(
 		'version' => array(
 			'1',
 			'1beta',
