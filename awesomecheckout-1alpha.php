@@ -9,38 +9,27 @@ class awesomecheckout_api_handler {
 	public function __construct() {
 		global $monkhead;
 
-		$need_to_verify_api_key = true;
-
 		$api_endpoint_type = $monkhead->get_api_endpoint_type();
 		$api_endpoint_call = $monkhead->get_api_endpoint_call();
 
-		if ( $api_endpoint_type == 'status' && $api_endpoint_call == 'latestVersion' )
-			$need_to_verify_api_key = false;
+		$allowed_endpoints = array(
+			'status' => 'latestVersion',
+			'collect' => 'ping'
+		);
 
-		// Verify API key
-		if ( $need_to_verify_api_key && !$monkhead->verify_api_key() ) {
-			echo json_encode( array(
-				'status' => 'error',
-				'message' => 'Invalid Key!'
-			) );
-			die();
+		$allow_call = false;
+
+		foreach ( $allowed_endpoints as $endpoint_type => $endpoint_call ) {
+			if ( $api_endpoint_type == $endpoint_type && $api_endpoint_call == $endpoint_call ) {
+				$allow_call = true;
+				break;
+			}
 		}
 
-		// Call the API handler function
-		$this->serve( $api_endpoint_type, $api_endpoint_call );
-	}
-
-	public function serve( $api_endpoint_type, $api_endpoint_call ) {
-		if ( $api_endpoint_type == 'status' ) {
-			if ( $api_endpoint_call == 'latestVersion' )
-				$this->serve_latest_version();
-			else
-				$die_flag = true;
+		if ( $allow_call ) {
+			// Call the API handler function
+			$this->serve( $api_endpoint_type, $api_endpoint_call );
 		} else {
-			$die_flag = true;
-		}
-
-		if ( $die_flag ) {
 			echo json_encode( array(
 				'status' => 'error',
 				'latestVersion' => 'Invalid API Endpoint!'
@@ -48,11 +37,30 @@ class awesomecheckout_api_handler {
 		}
 	}
 
+	public function serve( $api_endpoint_type, $api_endpoint_call ) {
+		if ( $api_endpoint_type == 'status' && $api_endpoint_call == 'latestVersion' )
+			$this->serve_latest_version();
+		else if ( $api_endpoint_type == 'collect' && $api_endpoint_call == 'ping' )
+			$this->collect_ping();
+	}
+
 	public function serve_latest_version() {
 		echo json_encode( array(
 			'status' => 'success',
 			'latestVersion' => '1.0'
 		) );
+		die();
+	}
+
+	public function collect_ping() {
+		global $monkhead;
+
+		if ( !isset( $_POST['ping'] ) )
+			die();
+
+		$ping_status = $monkhead->collect_ping( 'awesomecheckout', $_POST['ping'] );
+
+		echo $ping_status ? json_encode( array( 'status' => 'success' ) ) : json_encode( array( 'status' => 'error' ) );
 		die();
 	}
 
