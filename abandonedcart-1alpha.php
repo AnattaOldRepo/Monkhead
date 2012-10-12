@@ -12,13 +12,13 @@ class abandonedcart_api_handler {
 		$api_endpoint_type = $monkhead->get_api_endpoint_type();
 		$api_endpoint_call = $monkhead->get_api_endpoint_call();
 
-		if ( $api_endpoint_type == 'fetch' && $api_endpoint_call == 'payload' ) {
+		if ( ( $api_endpoint_type == 'fetch' && $api_endpoint_call == 'payload' ) || ( $api_endpoint_type == 'collect' && $api_endpoint_call == 'ping' ) ) {
 			// Call the API handler function
 			$this->serve( $api_endpoint_type, $api_endpoint_call );
 		} else {
 			echo json_encode( array(
 				'status' => 'error',
-				'message' => 'Invalid Key!'
+				'message' => 'Invalid API Endpoint!'
 			) );
 			die();
 		}
@@ -27,11 +27,8 @@ class abandonedcart_api_handler {
 	public function serve( $api_endpoint_type, $api_endpoint_call ) {
 		if ( $api_endpoint_type == 'fetch' && $api_endpoint_call == 'payload' ) {
 			$this->serve_payload();
-		} else {
-			echo json_encode( array(
-				'status' => 'error',
-				'latestVersion' => 'Invalid API Endpoint!'
-			) );
+		} else if ( $api_endpoint_type == 'collect' && $api_endpoint_call == 'ping' ) {
+			$this->collect_ping();
 		}
 	}
 
@@ -81,6 +78,18 @@ class abandonedcart_api_handler {
 			'status' => 'success',
 			'payload' => $payload
 		) );
+		die();
+	}
+
+	public function collect_ping() {
+		global $monkhead;
+
+		if ( !isset( $_POST['ping'] ) )
+			die();
+
+		$ping_status = $monkhead->collect_ping( 'abandonedcart', $_POST['ping'] );
+
+		echo $ping_status ? json_encode( array( 'status' => 'success' ) ) : json_encode( array( 'status' => 'error' ) );
 		die();
 	}
 

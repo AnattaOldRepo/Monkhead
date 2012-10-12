@@ -1,45 +1,39 @@
 <?php
 
 /**
- *	Monkhead Class
+ * 	Monkhead Class
  *
- *	Engine which drives the whole thing
+ * 	Engine which drives the whole thing
  */
-
 class Monkhead {
 
 	/**
-	 *	Database credentials
+	 * 	Database credentials
 	 */
-
 	private $dbhost;
 	private $dbname;
 	private $dbuser;
 	private $dbpass;
 
 	/**
-	 *	MySQLi connection handle
+	 * 	MySQLi connection handle
 	 */
-
 	private $mysqli;
 
 	/**
-	 *	Product or Service for which the object is created
+	 * 	Product or Service for which the object is created
 	 */
-
 	private $service;
 
 	/**
-	 *	API Endpoints
+	 * 	API Endpoints
 	 */
-
 	private $api_endpoint_type;
 	private $api_endpoint_call;
 
 	/**
-	 *	Set DB credentials, service whose API is being called for and API endpoint details on instantiation
+	 * 	Set DB credentials, service whose API is being called for and API endpoint details on instantiation
 	 */
-
 	public function __construct( $dbhost, $dbname, $dbuser, $dbpass, $service, $api_endpoint_type, $api_endpoint_call ) {
 		// Set Database credentials
 		$this->dbhost = $dbhost;
@@ -59,25 +53,22 @@ class Monkhead {
 	}
 
 	/**
-	 *	Function to return the API endpoint type
+	 * 	Function to return the API endpoint type
 	 */
-
 	public function get_api_endpoint_type() {
 		return $this->api_endpoint_type;
 	}
 
 	/**
-	 *	Function to return the API endpoint call
+	 * 	Function to return the API endpoint call
 	 */
-
 	public function get_api_endpoint_call() {
 		return $this->api_endpoint_call;
 	}
 
 	/**
-	 *	Function to establish MySQLi connection
+	 * 	Function to establish MySQLi connection
 	 */
-
 	public function establish_mysqli_connection() {
 		$mysqli = new mysqli( $this->dbhost, $this->dbuser, $this->dbpass, $this->dbname );
 		if ( $mysqli->connect_errno ) {
@@ -88,11 +79,10 @@ class Monkhead {
 	}
 
 	/**
-	 *	Function to verify that an email is valid.
+	 * 	Function to verify that an email is valid.
 	 *
-	 *	Credit: WordPress
+	 * 	Credit: WordPress
 	 */
-
 	public function is_email( $email ) {
 
 		// Test for the minimum length the email can be
@@ -134,7 +124,7 @@ class Monkhead {
 				return false;
 
 			// Test for invalid characters
-			if ( !preg_match('/^[a-z0-9-]+$/i', $sub ) )
+			if ( !preg_match( '/^[a-z0-9-]+$/i', $sub ) )
 				return false;
 		}
 
@@ -143,9 +133,20 @@ class Monkhead {
 	}
 
 	/**
-	 *	Function to check if the user already exists
+	 * 	Function to get real IP Address
 	 */
+	public function get_real_ip_address() {
+		if ( !empty( $_SERVER['HTTP_CLIENT_IP'] ) )
+			return $_SERVER['HTTP_CLIENT_IP'];
+		elseif ( !empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) // to check if IP is passed from proxy
+			return $_SERVER['HTTP_X_FORWARDED_FOR'];
+		else
+			return $_SERVER['REMOTE_ADDR'];
+	}
 
+	/**
+	 * 	Function to check if the user already exists
+	 */
 	public function user_exists( $user_email ) {
 		// Do a database query
 		$mysqli = $this->mysqli;
@@ -160,9 +161,8 @@ class Monkhead {
 	}
 
 	/**
-	 *	Function to create a new user
+	 * 	Function to create a new user
 	 */
-
 	public function create_user( $user_email ) {
 		// Write to database
 		$mysqli = $this->mysqli;
@@ -177,11 +177,10 @@ class Monkhead {
 	}
 
 	/**
-	 *	Function to get user details
+	 * 	Function to get user details
 	 *
-	 *	@param Integer (User ID) or String (User's email)
+	 * 	@param Integer (User ID) or String (User's email)
 	 */
-
 	public function get_user( $user ) {
 
 		if ( is_int( $user ) ) // If a user ID was passed
@@ -200,11 +199,10 @@ class Monkhead {
 	}
 
 	/**
-	 *	Function to get user ID from email
+	 * 	Function to get user ID from email
 	 */
-
 	public function get_user_id_from_email( $email ) {
-		if ( ! $this->is_email( $email ) )
+		if ( !$this->is_email( $email ) )
 			return false;
 
 		// Make a database query
@@ -217,13 +215,12 @@ class Monkhead {
 	}
 
 	/**
-	 *	Function to update user details
+	 * 	Function to update user details
 	 *
-	 *	Right now updates email address, as thats the only user detail we are saving as of now
+	 * 	Right now updates email address, as thats the only user detail we are saving as of now
 	 *
-	 *	@param User ID and array of details that we want to modify
+	 * 	@param User ID and array of details that we want to modify
 	 */
-
 	public function update_user( $user_id, $user_details ) {
 		// Fetch all the existing details and then merge it with the modifications
 		$user_existing_details = $this->get_user( $user_id );
@@ -241,15 +238,14 @@ class Monkhead {
 	}
 
 	/**
-	 *	Function to create new API key
+	 * 	Function to create new API key
 	 */
-
 	public function create_new_api_key( $user_email, $type = 'single', $label = '' ) {
 		// Fetch the user id
 		$user_id = $this->user_exists( $user_email );
 
 		// Create a new user if it doesn't exist
-		if ( ! $user_id )
+		if ( !$user_id )
 			$user_id = $this->create_user( $user_email );
 
 		// Generate API Key
@@ -268,9 +264,8 @@ class Monkhead {
 	}
 
 	/**
-	 *	Function to verify the api key for current API call
+	 * 	Function to verify the api key for current API call
 	 */
-
 	public function verify_api_key() {
 		// Get the API key sent
 		$api_key = $_REQUEST['api_key'];
@@ -289,9 +284,8 @@ class Monkhead {
 	}
 
 	/**
-	 *	Function to delete API key (marking it as inactive)
+	 * 	Function to delete API key (marking it as inactive)
 	 */
-
 	public function delete_api_key( $api_key ) {
 		// Update its status to be "inactive"
 		$mysqli = $this->mysqli;
@@ -303,5 +297,47 @@ class Monkhead {
 		else
 			return false;
 	}
-	
+
+	/**
+	 * 	Function to collect user's site data pings
+	 */
+	public function collect_ping( $service, $ping ) {
+		$mysqli = $this->mysqli;
+
+		// trim on all elements of $ping
+		$ping = array_map( 'trim', $ping );
+
+		$url = filter_var( $ping['url'], FILTER_VALIDATE_URL ) ? $ping['url'] : false;
+		$site_name = filter_var( $ping['site_name'], FILTER_SANITIZE_STRING ) ? $ping['site_name'] : false;
+		$version = ctype_digit( str_replace( '.', '', $ping['version'] ) ) ? $ping['version'] : false;
+
+		// If validation has failed
+		if ( $url === false || $site_name === false || $version === false ) {
+			return false;
+		}
+
+		$ip = $this->get_real_ip_address();
+
+		$query = "SELECT COUNT(*) as count, id FROM users_ping WHERE service = '$service' AND url = '$url';";
+		$result = $mysqli->query( $query );
+		$row = $result->fetch_assoc();
+
+		if ( $row['count'] == 0 ) {
+			// Fresh ping, insert it
+			$added_on = $updated_on = date( 'Y-m-d H:i:s', time() );
+			$query = "INSERT INTO users_ping VALUES ( '', '$service', '$version', '$site_name', '$url', '$ip', '$added_on', '$updated_on' );";
+			$result = $mysqli->query( $query );
+
+			return $mysqli->insert_id ? true : false;
+		} else {
+			// existing ping, update it
+			$existing_id = $row['id'];
+			$updated_on = date( 'Y-m-d H:i:s', time() );
+			$query = "UPDATE users_ping SET version = '$version', site_name = '$site_name', ip = '$ip', updated_on = '$updated_on' WHERE id = $existing_id;";
+			$result = $mysqli->query( $query );
+
+			return $result ? true : false;
+		}
+	}
+
 }
