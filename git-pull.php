@@ -1,5 +1,6 @@
 <?php
 
-mail( 'ashish@anattadesign.com', 'Github commits deployed', 'Commits were deployed on live site' );
+mail( 'ashish@anattadesign.com', 'Monkhead - Github commits deployed', 'Commits were deployed on production' );
+mail( 'nirav@anattadesign.com', 'Monkhead - Github commits deployed', 'Commits were deployed on production' );
 
 `git pull`;
