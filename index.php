@@ -27,6 +27,14 @@ $whitelist = array(
 			'1beta',
 			'1alpha'
 		)
+	),
+	// WPReadable
+	'wpreadable' => array(
+		'version' => array(
+			'1',
+			'1beta',
+			'1alpha'
+		)
 	)
 );
 
