@@ -32,8 +32,10 @@ class wpreadable_api_handler {
 	public function collect_ping() {
 		global $monkhead;
 
-		if ( !isset( $_POST['ping'] ) )
+		if ( !isset( $_POST['ping'] ) ) {
+			echo json_encode( array( 'status' => 'error' ) );
 			die();
+		}
 
 		$ping_status = $monkhead->collect_ping( 'wpreadable', $_POST['ping'] );
 
