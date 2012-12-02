@@ -59,49 +59,14 @@ class abandonedcart_api_handler {
 
 	public function serve_payload() {
 
-		$payload = array( );
-
-		$payload['overall'][] = array(
-			'operator' => array(
-				'lt' => 20 // value less than
-			),
-			'message' => 'Your conversion rate is terrible. Do better!'
-		);
-
-		$payload['overall'][] = array(
-			'operator' => array(
-				'gt' => 30, // value greater than
-				'lt' => 50 // value less than
-			),
-			'message' => 'Your conversion rate is good but not enough. Try harder.'
-		);
-
-		$payload['overall'][] = array(
-			'operator' => array(
-				'gt' => 70 // value greater than
-			),
-			'message' => 'Your conversion rate is awesome. Let us know.'
-		);
-
-		$payload['step'][] = array(
-			'step' => 'login',
-			'operator' => array(
-				'lt' => 70 // value less than
-			),
-			'message' => 'You are losing people on login step of checkout.'
-		);
-
-		$payload['step'][] = array(
-			'step' => 'payment',
-			'operator' => array(
-				'lt' => 50 // value less than
-			),
-			'message' => "Half of the people on the payment step doesn't go past the payment."
+		$message = array(
+			'ac' => 'Read why it is important to care about every detail on checkout - <a href="#">Blog post</a>',
+			'non-ac' => 'Adding security badges help improve conversion rates! Read more - <a href="#">Blog post</a>'
 		);
 
 		echo json_encode( array(
 			'status' => 'success',
-			'payload' => $payload
+			'data' => $message
 		) );
 		die();
 	}
