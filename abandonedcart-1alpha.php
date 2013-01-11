@@ -52,7 +52,7 @@ class abandonedcart_api_handler {
 	public function serve_latest_version() {
 		echo json_encode( array(
 			'status' => 'success',
-			'latestVersion' => '1.0'
+			'latestVersion' => '1.0.1'
 		) );
 		die();
 	}
