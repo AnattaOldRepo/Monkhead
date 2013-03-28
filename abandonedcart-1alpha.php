@@ -60,8 +60,8 @@ class abandonedcart_api_handler {
 	public function serve_payload() {
 
 		$message = array(
-			'ac' => 'Read why it is important to care about every detail on checkout - <a href="#">Blog post</a>',
-			'non-ac' => 'Adding security badges help improve conversion rates! Read more - <a href="#">Blog post</a>'
+			'ac' => '<a href="http://anattadesign.com/e-commerce-checkout-usability-study/" style="display:block;">63 checkout user experience guidelines to follow (http://is.gd/txKvvk)</a>',
+			'non-ac' => '<a href="http://anattadesign.com/e-commerce-checkout-usability-study/" style="display:block;">63 checkout user experience guidelines to follow (http://is.gd/txKvvk)</a>'
 		);
 
 		echo json_encode( array(
