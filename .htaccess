@@ -8,6 +8,6 @@ Header set Access-Control-Allow-Origin *
 <IfModule mod_rewrite.c>
 	Options +FollowSymLinks
 	RewriteEngine on
-	RewriteCond %{REQUEST_URI} !^/git-pull.php
+	RewriteCond %{REQUEST_URI} !^/gitpull.php
 	RewriteRule . index.php [L]
 </IfModule>
