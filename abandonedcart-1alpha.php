@@ -60,8 +60,8 @@ class abandonedcart_api_handler {
 	public function serve_payload() {
 
 		$message = array(
-			'ac' => '<a href="http://anattadesign.com/e-commerce-checkout-usability-study/" style="display:block;">63 checkout user experience guidelines to follow (http://is.gd/txKvvk)</a>',
-			'non-ac' => '<a href="http://anattadesign.com/e-commerce-checkout-usability-study/" style="display:block;">63 checkout user experience guidelines to follow (http://is.gd/txKvvk)</a>'
+			'ac' => '<a href="http://anattadesign.com/e-commerce-checkout-usability-study/?kme=Clicked%20Link&km_MyAB=Tip%201" style="display:block;">63 checkout user experience guidelines to follow (http://is.gd/n4TXaI)</a>',
+			'non-ac' => '<a href="http://anattadesign.com/e-commerce-checkout-usability-study/?kme=Clicked%20Link&km_MyAB=Tip%201" style="display:block;">63 checkout user experience guidelines to follow (http://is.gd/n4TXaI)</a>'
 		);
 
 		echo json_encode( array(
