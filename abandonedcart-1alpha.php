@@ -64,9 +64,37 @@ class abandonedcart_api_handler {
 			'non-ac' => '<a href="http://anattadesign.com/e-commerce-checkout-usability-study/?kme=Clicked%20Link&km_MyAB=Tip%201" style="display:block;">63 checkout user experience guidelines to follow (http://is.gd/n4TXaI)</a>'
 		);
 
+		$message_array = array(
+			'ac' => array(
+				'<a target="_blank" href="http://anattadesign.com/?kme=Clicked%20Link&km_Widget=tip" style="display:block;">Maintain your site\'s header but deactivate the links. Huge difference.</a>',
+				'<a target="_blank" href="http://fishpig.co.uk/blog/magento-forms-prototype-javascript-validation.html" style="display:block;">Customers mess up all the time. Are you helping them when they do?</a>',
+				'<a target="_blank" href="http://blog.kissmetrics.com/" style="display:block;">You can remove 3 sets of user inputs today. Take it up a notch!</a>',
+				'<a target="_blank" href="http://anattadesign.com/zip-code-at-checkout/?kme=Clicked%20Link&km_Widget=tip" style="display:block;">Use zip codes to prefill city, state, and country. It\'s easy.</a>',
+				'<a target="_blank" href="http://anattadesign.com/less-options-people-less-options/?kme=Clicked%20Link&km_Widget=tip" style="display:block;">Don\'t give the customer a choice to register. Just do it for them.</a>',
+				'<a target="_blank" href="http://blog.kissmetrics.com/first-step-of-checkout/" style="display:block;">Most cart abandonments happen on Step 1. Time to make a change.</a>',
+				'<a target="_blank" href="http://www.magentocommerce.com/wiki/3_-_store_setup_and_management/payment/using_google_checkout_with_magento" style="display:block;">Not everyone uses a credit card online. Have you tried Google Checkout?</a>',
+				'<a target="_blank" href="http://www.magentocommerce.com/knowledge-base/entry/setting-up-paypal-for-your-magento-store/" style="display:block;">Not everyone uses a credit card online. Have you tried Paypal?</a>',
+				'<a target="_blank" href="http://www.geotrust.com/ssl/ssl-certificates-premium/" style="display:block;">Customers should feel secure. Get a Geotrust Premium SSL certificate.</a>',
+				'<a target="_blank" href="http://www.mcafee.com/us/mcafeesecure/index.html" style="display:block;">Customers should feel secure. Try adding a Mcaffee Secure badge.</a>'
+			),
+			'non-ac' => array(
+				'<a target="_blank" href="http://anattadesign.com/?kme=Clicked%20Link&km_Widget=tip" style="display:block;">Maintain your site\'s header but deactivate the links. Huge difference.</a>',
+				'<a target="_blank" href="http://fishpig.co.uk/blog/magento-forms-prototype-javascript-validation.html" style="display:block;">Customers mess up all the time. Are you helping them when they do?</a>',
+				'<a target="_blank" href="http://blog.kissmetrics.com/" style="display:block;">You can remove 3 sets of user inputs today. Take it up a notch!</a>',
+				'<a target="_blank" href="http://anattadesign.com/zip-code-at-checkout/?kme=Clicked%20Link&km_Widget=tip" style="display:block;">Use zip codes to prefill city, state, and country. It\'s easy.</a>',
+				'<a target="_blank" href="http://anattadesign.com/less-options-people-less-options/?kme=Clicked%20Link&km_Widget=tip" style="display:block;">Don\'t give the customer a choice to register. Just do it for them.</a>',
+				'<a target="_blank" href="http://blog.kissmetrics.com/first-step-of-checkout/" style="display:block;">Most cart abandonments happen on Step 1. Time to make a change.</a>',
+				'<a target="_blank" href="http://www.magentocommerce.com/wiki/3_-_store_setup_and_management/payment/using_google_checkout_with_magento" style="display:block;">Not everyone uses a credit card online. Have you tried Google Checkout?</a>',
+				'<a target="_blank" href="http://www.magentocommerce.com/knowledge-base/entry/setting-up-paypal-for-your-magento-store/" style="display:block;">Not everyone uses a credit card online. Have you tried Paypal?</a>',
+				'<a target="_blank" href="http://www.geotrust.com/ssl/ssl-certificates-premium/" style="display:block;">Customers should feel secure. Get a Geotrust Premium SSL certificate.</a>',
+				'<a target="_blank" href="http://www.mcafee.com/us/mcafeesecure/index.html" style="display:block;">Customers should feel secure. Try adding a Mcaffee Secure badge.</a>'
+			)
+		);
+
 		echo json_encode( array(
 			'status' => 'success',
-			'data' => $message
+			'data' => $message,
+			'data_array' => $message_array
 		) );
 		die();
 	}
