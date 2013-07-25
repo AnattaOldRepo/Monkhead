@@ -92,7 +92,7 @@ class abandonedcart_api_handler {
 		);
 
 		$email_footer = array(
-			'<p>Sponsored by <a href="https://awesomecheckout.com/?kme=Clicked%20Link&km_Email=MyAB">Awesome Checkout</a> - the highest converting checkout extension for Magento</p>',
+			'<p style="text-align:center;padding-bottom:25px;">Sponsored by <a href="https://awesomecheckout.com/?kme=Clicked%20Link&km_Email=MyAB">Awesome Checkout</a> - the highest converting checkout extension for Magento</p>',
 		);
 
 		echo json_encode( array(
